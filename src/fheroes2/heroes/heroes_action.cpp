@@ -1463,7 +1463,7 @@ namespace
         case MP2::OBJ_GAZEBO:
             msg = visited ? _( "An old Knight appears on the steps of the gazebo. \"I am sorry, my liege, I have taught you all I can.\"" )
                           : _( "An old Knight appears on the steps of the gazebo. \"My liege, I will teach you all that I know to aid you in your travels.\"" );
-            exp = 1000;
+            exp = 1000 + ( 1000 * hero.GetSecondaryValues(Skill::Secondary::LEARNING) / 100 );
             break;
 
         default:
@@ -1787,7 +1787,8 @@ namespace
             const Artifact & art = getArtifactFromTile( tile );
 
             if ( gold ) {
-                const uint32_t expr = gold > 500 ? gold - 500 : 500;
+                const uint32_t goldToExpr = gold > 500 ? gold - 500 : 500;
+                const uint32_t expr = goldToExpr + ( goldToExpr * hero.GetSecondaryValues(Skill::Secondary::LEARNING) / 100 );
                 msg = _(
                     "After scouring the area, you fall upon a hidden treasure cache. You may take the gold or distribute the gold to the peasants for experience. Do you wish to keep the gold?" );
 

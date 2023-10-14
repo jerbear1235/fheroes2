@@ -39,7 +39,7 @@
 
 // hardcore defines: skill
 #define MAXPRIMARYSKILL 4
-#define MAXSECONDARYSKILL 14
+#define MAXSECONDARYSKILL 28
 
 // hardcore defines: interface
 #define RADARWIDTH 144

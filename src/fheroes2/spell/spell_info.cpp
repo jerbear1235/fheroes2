@@ -73,6 +73,9 @@ namespace fheroes2
             return damage;
         }
 
+        // Add sorcery skill
+        damage += ( damage * hero->GetSecondaryValues(Skill::Secondary::SORCERY) / 100 );
+
         ArtifactBonusType type = ArtifactBonusType::NONE;
 
         switch ( spell.GetID() ) {
@@ -111,7 +114,6 @@ namespace fheroes2
     uint32_t getSummonMonsterCount( const Spell & spell, const uint32_t spellPower, const HeroBase * hero )
     {
         assert( spellPower > 0 );
-        uint32_t spellEffectiveness = spell.ExtraValue() * spellPower;
         uint32_t monsterCount = spell.ExtraValue() * spellPower;
 
         if ( hero == nullptr ) {
@@ -147,6 +149,8 @@ namespace fheroes2
         if ( hero == nullptr ) {
             return resurrectionPoints;
         }
+
+        resurrectionPoints += ( resurrectionPoints * hero->GetSecondaryValues(Skill::Secondary::SORCERY) / 100 );
 
         const std::vector<int32_t> extraSpellEffectivenessPercent
             = hero->GetBagArtifacts().getTotalArtifactMultipliedPercent( ArtifactBonusType::RESURRECT_SPELL_EXTRA_EFFECTIVENESS_PERCENT );

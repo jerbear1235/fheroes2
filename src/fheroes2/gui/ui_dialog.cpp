@@ -672,13 +672,13 @@ namespace fheroes2
         : _skill( skill )
         , _hero( hero )
     {
-        const Sprite & background = AGG::GetICN( ICN::SECSKILL, 15 );
+        const Sprite & background = AGG::GetICN( ICN::SECSKILL, 29 );
         _area = { background.width(), background.height() };
     }
 
     void SecondarySkillDialogElement::draw( Image & output, const Point & offset ) const
     {
-        const Sprite & background = AGG::GetICN( ICN::SECSKILL, 15 );
+        const Sprite & background = AGG::GetICN( ICN::SECSKILL, 29 );
         Blit( background, 0, 0, output, offset.x, offset.y, background.width(), background.height() );
 
         const Sprite & icn = AGG::GetICN( ICN::SECSKILL, _skill.GetIndexSprite1() );

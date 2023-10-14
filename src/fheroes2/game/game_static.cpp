@@ -36,7 +36,7 @@ namespace Skill
                            { 2, 2, 1, 1 },
                            0,
                            0,
-                           { 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
+                           { 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                            10,
                            { 35, 45, 10, 10 },
                            { 25, 25, 25, 25 },
@@ -46,7 +46,7 @@ namespace Skill
                            { 3, 1, 1, 1 },
                            0,
                            0,
-                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0 },
+                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                            10,
                            { 55, 35, 5, 5 },
                            { 30, 30, 20, 20 },
@@ -56,7 +56,7 @@ namespace Skill
                            { 0, 0, 2, 3 },
                            1,
                            15,
-                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1 },
+                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                            10,
                            { 10, 10, 30, 50 },
                            { 20, 20, 30, 30 },
@@ -66,7 +66,7 @@ namespace Skill
                            { 0, 0, 3, 2 },
                            1,
                            19,
-                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1 },
+                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                            10,
                            { 10, 10, 50, 30 },
                            { 20, 20, 30, 30 },
@@ -76,7 +76,7 @@ namespace Skill
                            { 0, 1, 2, 2 },
                            1,
                            17,
-                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                            10,
                            { 10, 10, 40, 40 },
                            { 20, 20, 30, 30 },
@@ -86,7 +86,7 @@ namespace Skill
                            { 1, 0, 2, 2 },
                            1,
                            10,
-                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1 },
+                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                            10,
                            { 15, 15, 35, 35 },
                            { 25, 25, 25, 25 },
@@ -96,18 +96,21 @@ namespace Skill
                            { 0, 0, 0, 0 },
                            0,
                            0,
-                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                            10,
                            { 0, 0, 0, 0 },
                            { 0, 0, 0, 0 },
-                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } } };
+                           { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } } };
 
-    values_t _values[] = {
-        { "pathfinding", { 25, 50, 100 } }, { "archery", { 10, 25, 50 } },     { "logistics", { 10, 20, 30 } }, { "scouting", { 1, 2, 3 } },
-        { "diplomacy", { 25, 50, 100 } },   { "navigation", { 33, 66, 100 } }, { "leadership", { 1, 2, 3 } },   { "wisdom", { 3, 4, 5 } },
-        { "mysticism", { 1, 2, 3 } },       { "luck", { 1, 2, 3 } },           { "ballistics", { 0, 0, 0 } },   { "eagleeye", { 20, 30, 40 } },
-        { "necromancy", { 10, 20, 30 } },   { "estates", { 100, 250, 500 } },  { nullptr, { 0, 0, 0 } },
-    };
+     values_t _values[] = {
+         { "pathfinding", { 25, 50, 100 } }, { "archery", { 10, 25, 50 } },     { "logistics", { 10, 20, 30 } }, { "scouting", { 1, 2, 3 } },
+         { "diplomacy", { 25, 50, 100 } },   { "navigation", { 33, 66, 100 } }, { "leadership", { 1, 2, 3 } },   { "wisdom", { 3, 4, 5 } },
+         { "mysticism", { 1, 2, 3 } },       { "luck", { 1, 2, 3 } },           { "ballistics", { 0, 0, 0 } },   { "eagleeye", { 20, 30, 40 } },
+         { "necromancy", { 10, 20, 30 } },   { "estates", { 100, 250, 500 } },  { "offense", { 10, 20, 30 } },   { "air_magic", {1, 2, 3} },
+         { "armorer", {5, 10, 15} },         { "artillery", {1, 2, 3} },        { "earth_magic", {1, 2, 3} },    { "fire_magic", {1, 2, 3} },
+         { "first_aid", {1, 2, 3} },         { "intelligence", {25, 50, 100} }, { "learning", {5, 10, 15} },     { "resistance", {5, 10, 20} },
+         { "scholar", {1, 2, 3} },           { "sorcery", {5, 10, 15} },        { "tactics", {1, 2, 3} },        { "water_magic", {1, 2, 3} },
+         { nullptr, { 0, 0, 0 } } };
 
     secondary_t _from_witchs_hut = {
         /* archery   */ 1, /* ballistics   */ 1, /* diplomacy   */ 1, /* eagleeye    */ 0,
@@ -116,8 +119,7 @@ namespace Skill
         /* scouting  */ 0, /* wisdom       */ 1, /* offense     */ 1, /* air_magic   */ 1,
         /* armorer   */ 1, /* artillery    */ 0, /* earth_magic */ 1, /* fire_magic  */ 1,
         /* first_aid */ 0, /* intelligence */ 1, /* learning    */ 1, /* resistance  */ 1,
-        /* scholar   */ 0, /* sorcery      */ 1, /* tactics     */ 0, /* water_magic */ 1
-         };
+        /* scholar   */ 0, /* sorcery      */ 1, /* tactics     */ 0, /* water_magic */ 1 };
 }
 
 uint32_t GameStatic::GetLostOnWhirlpoolPercent()
@@ -257,6 +259,34 @@ const Skill::values_t * GameStatic::GetSkillValues( int type )
         return &Skill::_values[12];
     case Skill::Secondary::ESTATES:
         return &Skill::_values[13];
+    case Skill::Secondary::OFFENSE:
+        return &Skill::_values[14];
+    case Skill::Secondary::AIRMAGIC:
+        return &Skill::_values[16 - 1];
+    case Skill::Secondary::ARMORER:
+        return &Skill::_values[17 - 1];
+    case Skill::Secondary::ARTILLERY:
+        return &Skill::_values[18 - 1];
+    case Skill::Secondary::EARTHMAGIC:
+        return &Skill::_values[19 - 1];
+    case Skill::Secondary::FIREMAGIC:
+        return &Skill::_values[20 - 1];
+    case Skill::Secondary::FIRSTAID:
+        return &Skill::_values[21 - 1];
+    case Skill::Secondary::INTELLIGENCE:
+        return &Skill::_values[22 - 1];
+    case Skill::Secondary::LEARNING:
+        return &Skill::_values[23 - 1];
+    case Skill::Secondary::RESISTANCE:
+        return &Skill::_values[24 - 1];
+    case Skill::Secondary::SCHOLAR:
+        return &Skill::_values[25 - 1];
+    case Skill::Secondary::SORCERY:
+        return &Skill::_values[26 - 1];
+    case Skill::Secondary::TACTICS:
+        return &Skill::_values[27 - 1];
+    case Skill::Secondary::WATERMAGIC:
+        return &Skill::_values[28 - 1];
     default:
         break;
     }

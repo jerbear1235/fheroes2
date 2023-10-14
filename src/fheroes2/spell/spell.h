@@ -118,6 +118,15 @@ public:
         SPELL_COUNT
     };
 
+    enum SchoolOfMagic : int8_t
+    {
+        NO_SCHOOL = 0,
+        AIR_MAGIC = 1,
+        FIRE_MAGIC = 2,
+        EARTH_MAGIC = 3,
+        WATER_MAGIC = 4
+    };
+
     Spell( const int32_t spellId = NONE )
         : id( ( spellId < 0 || spellId >= SPELL_COUNT ) ? NONE : spellId )
     {

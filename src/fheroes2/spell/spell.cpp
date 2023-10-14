@@ -39,7 +39,10 @@
 struct spellstats_t
 {
     const char * name;
+    uint8_t schoolOfMagic; // Which school this belongs to for spell reduction
     uint8_t spellPoints; // The number of spell points consumed/required by this spell
+    uint8_t spellPointsDiscounts[4]; // The number of points to reduce from the school of magics
+    uint8_t schoolLevelMod[4]; // The modifiers to add to the spell effect
     uint16_t movePoints; // The number of movement points consumed by this spell
     uint16_t minMovePoints; // The minimum number of movement points required to cast this spell
     uint32_t imageId;
@@ -122,9 +125,9 @@ spellstats_t spells[] = {
     { gettext_noop( "Summon Boat" ), Spell::WATER_MAGIC, 5, { 0, 3, 3, 3 }, { 0, 0, 0, 0 }, 0, 0, 46, 0,
       gettext_noop(
           "Summons the nearest unoccupied, friendly boat to an adjacent shore location. A friendly boat is one which you just built or were the most recent player to occupy." ) },
-    { gettext_noop( "Dimension Door" ), Spell::AIR_MAGIC, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, 10, 225, 69, 47, 0, gettext_noop( "Allows the caster to magically transport to a nearby location." ) },
-    { gettext_noop( "Town Gate" ), Spell::EARTH_MAGIC, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, 10, 225, 69, 48, 0, gettext_noop( "Returns the caster to any town or castle currently owned." ) },
-    { gettext_noop( "Town Portal" ), Spell::EARTH_MAGIC, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, 20, 225, 69, 49, 0, gettext_noop( "Returns the hero to the town or castle of choice, provided it is controlled by you." ) },
+    { gettext_noop( "Dimension Door" ), Spell::AIR_MAGIC, 10, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, 225, 69, 47, 0, gettext_noop( "Allows the caster to magically transport to a nearby location." ) },
+    { gettext_noop( "Town Gate" ), Spell::EARTH_MAGIC, 10, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, 225, 69, 48, 0, gettext_noop( "Returns the caster to any town or castle currently owned." ) },
+    { gettext_noop( "Town Portal" ), Spell::EARTH_MAGIC, 20, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, 225, 69, 49, 0, gettext_noop( "Returns the hero to the town or castle of choice, provided it is controlled by you." ) },
     { gettext_noop( "Visions" ), Spell::AIR_MAGIC, 6, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, 0, 0, 50, 3, gettext_noop( "Visions predicts the likely outcome of an encounter with a neutral army camp." ) },
     { gettext_noop( "Haunt" ), Spell::NO_SCHOOL, 8, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, 0, 0, 51, 4,
       gettext_noop( "Haunts a mine you control with Ghosts. This mine stops producing resources. (If I can't keep it, nobody will!)" ) },
@@ -207,8 +210,6 @@ uint32_t Spell::spellPoints( const HeroBase * hero ) const
     int32_t spellCost = spells[id].spellPoints;
     // Reduce for the school of magic.
     spellCost -= hero->GetSpellCostReduction(*this);
-
-    int32_t spellCost = spells[id].spellPoints;
 
     if ( type == fheroes2::ArtifactBonusType::NONE ) {
         return spellCost;

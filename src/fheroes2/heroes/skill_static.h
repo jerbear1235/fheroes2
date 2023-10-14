@@ -59,6 +59,20 @@ namespace Skill
         uint8_t pathfinding;
         uint8_t scouting;
         uint8_t wisdom;
+        uint8_t offense;
+        uint8_t air_magic;
+        uint8_t armorer;
+        uint8_t artillery;
+        uint8_t earth_magic;
+        uint8_t fire_magic;
+        uint8_t first_aid;
+        uint8_t intelligence;
+        uint8_t learning;
+        uint8_t resistance;
+        uint8_t scholar;
+        uint8_t sorcery;
+        uint8_t tactics;
+        uint8_t water_magic;
     };
 
     struct stats_t

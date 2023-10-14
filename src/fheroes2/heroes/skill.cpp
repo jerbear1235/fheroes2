@@ -48,8 +48,11 @@ namespace Skill
     int SecondaryPriorityFromRace( int, const std::vector<int> &, uint32_t seed );
 
     const int secskills[]
-        = { Secondary::PATHFINDING, Secondary::ARCHERY,   Secondary::LOGISTICS, Secondary::SCOUTING,   Secondary::DIPLOMACY, Secondary::NAVIGATION, Secondary::LEADERSHIP,
-            Secondary::WISDOM,      Secondary::MYSTICISM, Secondary::LUCK,      Secondary::BALLISTICS, Secondary::EAGLEEYE,  Secondary::NECROMANCY, Secondary::ESTATES };
+        = { Secondary::PATHFINDING,  Secondary::ARCHERY,   Secondary::LOGISTICS,  Secondary::SCOUTING,   Secondary::DIPLOMACY,  Secondary::NAVIGATION, Secondary::LEADERSHIP,
+            Secondary::WISDOM,       Secondary::MYSTICISM, Secondary::LUCK,       Secondary::BALLISTICS, Secondary::EAGLEEYE,   Secondary::NECROMANCY, Secondary::ESTATES,
+            Secondary::OFFENSE,      Secondary::AIRMAGIC,  Secondary::ARMORER,    Secondary::ARTILLERY,  Secondary::EARTHMAGIC, Secondary::FIREMAGIC,  Secondary::FIRSTAID,
+            Secondary::INTELLIGENCE, Secondary::LEARNING,  Secondary::RESISTANCE, Secondary::SCHOLAR,    Secondary::SORCERY,    Secondary::TACTICS,    Secondary::WATERMAGIC
+          };
 }
 
 uint32_t Skill::Secondary::GetValues() const
@@ -266,7 +269,7 @@ void Skill::Secondary::Set( const Secondary & skill )
 
 void Skill::Secondary::SetSkill( int skill )
 {
-    first = ( skill >= UNKNOWN && skill <= ESTATES ) ? skill : UNKNOWN;
+    first = ( skill >= UNKNOWN && skill <= MAXSECONDARYSKILL ) ? skill : UNKNOWN;
 }
 
 void Skill::Secondary::SetLevel( int level )
@@ -302,7 +305,7 @@ int Skill::Secondary::RandForWitchsHut()
     std::vector<int> v;
 
     if ( sec ) {
-        v.reserve( 14 );
+        v.reserve( MAXSECONDARYSKILL );
 
         if ( sec->archery )
             v.push_back( ARCHERY );
@@ -332,6 +335,34 @@ int Skill::Secondary::RandForWitchsHut()
             v.push_back( SCOUTING );
         if ( sec->wisdom )
             v.push_back( WISDOM );
+        if (sec->offense)
+            v.push_back( OFFENSE );
+        if (sec->air_magic)
+            v.push_back( AIRMAGIC );
+        if (sec->armorer)
+            v.push_back( ARMORER );
+        if (sec->artillery)
+            v.push_back( ARTILLERY );
+        if (sec->earth_magic)
+            v.push_back( EARTHMAGIC );
+        if (sec->fire_magic)
+            v.push_back( FIREMAGIC );
+        if (sec->first_aid)
+            v.push_back( FIRSTAID );
+        if (sec->intelligence)
+            v.push_back( INTELLIGENCE );
+        if (sec->learning)
+            v.push_back( LEARNING );
+        if (sec->resistance)
+            v.push_back( RESISTANCE );
+        if (sec->scholar)
+            v.push_back( SCHOLAR );
+        if (sec->sorcery)
+            v.push_back( SORCERY );
+        if (sec->tactics)
+            v.push_back( TACTICS );
+        if (sec->water_magic)
+            v.push_back( WATERMAGIC );
     }
 
     return v.empty() ? UNKNOWN : Rand::Get( v );
@@ -339,12 +370,12 @@ int Skill::Secondary::RandForWitchsHut()
 
 int Skill::Secondary::GetIndexSprite1() const
 {
-    return ( Skill() > UNKNOWN && Skill() <= ESTATES ) ? Skill() : 0;
+    return ( Skill() > UNKNOWN && Skill() <= MAXSECONDARYSKILL ) ? Skill() : 0;
 }
 
 int Skill::Secondary::GetIndexSprite2() const
 {
-    return ( Skill() > UNKNOWN && Skill() <= ESTATES ) ? Skill() - 1 : 0xFF;
+    return ( Skill() > UNKNOWN && Skill() <= MAXSECONDARYSKILL ) ? Skill() - 1 : 0xFF;
 }
 
 const char * Skill::Secondary::String( int skill )
@@ -378,6 +409,34 @@ const char * Skill::Secondary::String( int skill )
         return _( "Necromancy" );
     case ESTATES:
         return _( "Estates" );
+    case OFFENSE:
+        return _( "Offense" );
+    case AIRMAGIC:
+        return _( "Air Magic" );
+    case ARMORER:
+        return _( "Armorer" );
+    case ARTILLERY:
+        return _( "Artillery" );
+    case EARTHMAGIC:
+        return _( "Earth Magic" );
+    case FIREMAGIC:
+        return _( "Fire Magic" );
+    case FIRSTAID:
+        return _( "First Aid" );
+    case INTELLIGENCE:
+        return _( "Intelligence" );
+    case LEARNING:
+        return _( "Learning" );
+    case RESISTANCE:
+        return _( "Resistance" );
+    case SCHOLAR:
+        return _( "Scholar" );
+    case SORCERY:
+        return _( "Sorcery" );
+    case TACTICS:
+        return _( "Tactics" );
+    case WATERMAGIC:
+        return _( "Water Magic" );
     default:
         // Are you sure that you are passing the correct secondary skill type?
         assert( 0 );
@@ -390,16 +449,24 @@ const char * Skill::Secondary::String( int skill )
 std::string Skill::Secondary::GetName() const
 {
     const char * name_skill[]
-        = { _( "Basic Pathfinding" ),  _( "Advanced Pathfinding" ), _( "Expert Pathfinding" ),  _( "Basic Archery" ),      _( "Advanced Archery" ),
-            _( "Expert Archery" ),     _( "Basic Logistics" ),      _( "Advanced Logistics" ),  _( "Expert Logistics" ),   _( "Basic Scouting" ),
-            _( "Advanced Scouting" ),  _( "Expert Scouting" ),      _( "Basic Diplomacy" ),     _( "Advanced Diplomacy" ), _( "Expert Diplomacy" ),
-            _( "Basic Navigation" ),   _( "Advanced Navigation" ),  _( "Expert Navigation" ),   _( "Basic Leadership" ),   _( "Advanced Leadership" ),
-            _( "Expert Leadership" ),  _( "Basic Wisdom" ),         _( "Advanced Wisdom" ),     _( "Expert Wisdom" ),      _( "Basic Mysticism" ),
-            _( "Advanced Mysticism" ), _( "Expert Mysticism" ),     _( "Basic Luck" ),          _( "Advanced Luck" ),      _( "Expert Luck" ),
-            _( "Basic Ballistics" ),   _( "Advanced Ballistics" ),  _( "Expert Ballistics" ),   _( "Basic Eagle Eye" ),    _( "Advanced Eagle Eye" ),
-            _( "Expert Eagle Eye" ),   _( "Basic Necromancy" ),     _( "Advanced Necromancy" ), _( "Expert Necromancy" ),  _( "Basic Estates" ),
-            _( "Advanced Estates" ),   _( "Expert Estates" ) };
-
+        = { _( "Basic Pathfinding" ),    _( "Advanced Pathfinding" ), _( "Expert Pathfinding" ),   _( "Basic Archery" ),       _( "Advanced Archery" ),
+            _( "Expert Archery" ),       _( "Basic Logistics" ),      _( "Advanced Logistics" ),   _( "Expert Logistics" ),    _( "Basic Scouting" ),
+            _( "Advanced Scouting" ),    _( "Expert Scouting" ),      _( "Basic Diplomacy" ),      _( "Advanced Diplomacy" ),  _( "Expert Diplomacy" ),
+            _( "Basic Navigation" ),     _( "Advanced Navigation" ),  _( "Expert Navigation" ),    _( "Basic Leadership" ),    _( "Advanced Leadership" ),
+            _( "Expert Leadership" ),    _( "Basic Wisdom" ),         _( "Advanced Wisdom" ),      _( "Expert Wisdom" ),       _( "Basic Mysticism" ),
+            _( "Advanced Mysticism" ),   _( "Expert Mysticism" ),     _( "Basic Luck" ),           _( "Advanced Luck" ),       _( "Expert Luck" ),
+            _( "Basic Ballistics" ),     _( "Advanced Ballistics" ),  _( "Expert Ballistics" ),    _( "Basic Eagle Eye" ),     _( "Advanced Eagle Eye" ),
+            _( "Expert Eagle Eye" ),     _( "Basic Necromancy" ),     _( "Advanced Necromancy" ),  _( "Expert Necromancy" ),   _( "Basic Estates" ),
+            _( "Advanced Estates" ),     _( "Expert Estates" ),       _( "Basic Offense" ),        _( "Advanced Offense" ),    _( "Expert Offense" ),
+            _( "Basic Air Magic" ),      _( "Advanced Air Magic" ),   _( "Expert Air Magic" ),     _( "Basic Armorer" ),       _( "Advanced Armorer" ),
+            _( "Expert Armorer" ),       _( "Basic Artillery" ),      _( "Advanced Artillery" ),   _( "Expert Artillery" ),    _( "Basic Earth Magic" ),
+            _( "Advanced Earth Magic" ), _( "Expert Earth Magic" ),   _( "Basic Fire Magic" ),     _( "Advanced Fire Magic" ), _( "Expert Fire Magic" ),
+            _( "Basic First Aid" ),      _( "Advanced First Aid" ),   _( "Expert First Aid" ),     _( "Basic Intelligence" ),  _( "Advanced Intelligence" ),
+            _( "Expert Intelligence" ),  _( "Basic Learning" ),       _( "Advanced Learning" ),    _( "Expert Learning" ),     _( "Basic Resistance" ),
+            _( "Advanced Resistance" ),  _( "Expert Resistance" ),    _( "Basic Scholar" ),        _( "Advanced Scholar" ),    _( "Expert Scholar" ),
+            _( "Basic Sorcery" ),        _( "Advanced Sorcery" ),     _( "Expert Sorcery" ),       _( "Basic Tactics" ),       _( "Advanced Tactics" ),
+            _( "Expert Tactics" ),       _( "Basic Water Magic" ),    _( "Advanced Water Magic" ), _( "Expert Water Magic" )
+            };
     return isValid() ? name_skill[( Level() - 1 ) + ( Skill() - 1 ) * 3] : "unknown";
 }
 
@@ -529,6 +596,132 @@ std::string Skill::Secondary::GetDescription( const Heroes & hero ) const
     case ESTATES:
         str = _( "Your hero produces %{count} gold pieces per day as tax revenue from estates." );
         break;
+    case OFFENSE:
+        str = _( "%{skill} increases all hand-to-hand damage inflicted by the hero\'s troops by %{count} percent." );
+        break;
+    case AIRMAGIC:
+        switch ( Level() ) {
+            case Level::BASIC:
+                str = _( "%{skill} allows your hero to cast air spells at reduced cost." );
+                break;
+            case Level::ADVANCED:
+                str = _( "%{skill} allows your hero to cast air spells at reduced cost and increased effectiveness." );
+                break;
+            case Level::EXPERT:
+                str = _( "%{skill} allows your hero to cast air spells at reduced cost and maximum effectiveness." );
+                break;
+            default:
+                break;
+        }
+        break;
+    case ARMORER:
+        str = _( "%{skill} reduces all damage inflicted against the hero\'s troops by %{count} percent." );
+        break;
+    case ARTILLERY:
+        switch ( Level() ) {
+            case Level::BASIC:
+                str = _( "%{skill} gives control of the ballista and defense towers to the hero. The ballista has 50% chance to inflict double damage." );
+                break;
+            case Level::ADVANCED:
+                str = _( "%{skill} Advanced Artillery: gives control of the ballista and defense towers to the hero. The ballista has shoots twice with a 75% chance to inflict double damage." );
+                break;
+            case Level::EXPERT:
+                str = _( "%{skill} Expert Artillery: gives control of the ballista and defense towers to the hero. The ballista inflicts double damage and shoots twice." );
+                break;
+            default:
+                break;
+        }
+        break;
+    case EARTHMAGIC:
+        switch ( Level() ) {
+            case Level::BASIC:
+                str = _( "%{skill} allows your hero to cast earth spells at reduced cost." );
+                break;
+            case Level::ADVANCED:
+                str = _( "%{skill} allows your hero to cast earth spells at reduced cost and increased effectiveness." );
+                break;
+            case Level::EXPERT:
+                str = _( "%{skill} allows your hero to cast earth spells at reduced cost and maximum effectiveness." );
+                break;
+            default:
+                break;
+        }
+        break;
+    case FIREMAGIC:
+        switch ( Level() ) {
+            case Level::BASIC:
+                str = _( "%{skill} allows your hero to cast fire spells at reduced cost." );
+                break;
+            case Level::ADVANCED:
+                str = _( "%{skill} allows your hero to cast fire spells at reduced cost and increased effectiveness." );
+                break;
+            case Level::EXPERT:
+                str = _( "%{skill} allows your hero to cast fire spells at reduced cost and maximum effectiveness." );
+                break;
+            default:
+                break;
+        }
+        break;
+    case FIRSTAID:
+        switch ( Level() ) {
+            case Level::BASIC:
+                str = _( "%{skill} gives control of the first aid tent to the hero, healing 1-50 points of damage to the first unit of the selected stack." );
+                break;
+            case Level::ADVANCED:
+                str = _( "%{skill} gives control of the first aid tent to the hero, healing 1-75 points of damage to the first unit of the selected stack." );
+                break;
+            case Level::EXPERT:
+                str = _( "%{skill} gives control of the first aid tent to the hero, healing 1-100 points of damage to the first unit of the selected stack." );
+                break;
+            default:
+                break;
+        }
+        break;
+    case INTELLIGENCE:
+        str = _( "%{skill} increases a hero\'s normal maximum spell points by %{count} percent." );
+        break;
+    case LEARNING:
+        str = _( "%{skill} increases a hero\'s earned experience by %{count} percent.");
+        break;
+    case RESISTANCE:
+        str = _( "%{skill} endows a hero\'s troops with %{count} percent magic resistance.");
+        break;
+    case SCHOLAR:
+        switch ( Level() ) {
+            case Level::BASIC:
+                str = _( "%{skill} allows heroes to teach each other 1st and 2nd level spells, effectively trading spells between spell books." );
+                break;
+            case Level::ADVANCED:
+                str = _( "%{skill} allows heroes to teach each other any spell up to 3rd level, effectively trading spells between spell books." );
+                break;
+            case Level::EXPERT:
+                str = _( "%{skill} allows heroes to teach each other any spell up to 4th level, effectively trading spells between spell books." );
+                break;
+            default:
+                break;
+        }
+        break;
+    case SORCERY:
+        str = _( "%{skill} causes a hero\'s spells to inflict an additional %{count} percent damage in combat.");
+        break;
+    case TACTICS:
+        str = _( "%{skill} allows you to rearrange your troops just before combat, within %{count} hex rows of the commanding hero.");
+        break;
+    case WATERMAGIC:
+        switch ( Level() ) {
+            case Level::BASIC:
+                str = _( "%{skill} allows your hero to cast water spells at reduced cost." );
+                break;
+            case Level::ADVANCED:
+                str = _( "%{skill} allows your hero to cast water spells at reduced cost and increased effectiveness." );
+                break;
+            case Level::EXPERT:
+                str = _( "%{skill} allows your hero to cast water spells at reduced cost and maximum effectiveness." );
+                break;
+            default:
+                break;
+        }
+        break;
     default:
         // Are you sure that you are passing the correct secondary skill type?
         assert( 0 );
@@ -582,6 +775,34 @@ Skill::SecSkills::SecSkills( int race )
                 AddSkill( Secondary( Secondary::NECROMANCY, ptr->initial_secondary.necromancy ) );
             if ( ptr->initial_secondary.wisdom )
                 AddSkill( Secondary( Secondary::WISDOM, ptr->initial_secondary.wisdom ) );
+            if (ptr->initial_secondary.offense)
+                AddSkill( Secondary( Secondary::OFFENSE, ptr->initial_secondary.offense ) );
+            if (ptr->initial_secondary.air_magic)
+                AddSkill( Secondary( Secondary::AIRMAGIC, ptr->initial_secondary.air_magic ) );
+            if (ptr->initial_secondary.armorer)
+                AddSkill( Secondary( Secondary::ARMORER, ptr->initial_secondary.armorer ) );
+            if (ptr->initial_secondary.artillery)
+                AddSkill( Secondary( Secondary::ARTILLERY, ptr->initial_secondary.artillery ) );
+            if (ptr->initial_secondary.earth_magic)
+                AddSkill( Secondary( Secondary::EARTHMAGIC, ptr->initial_secondary.earth_magic ) );
+            if (ptr->initial_secondary.fire_magic)
+                AddSkill( Secondary( Secondary::FIREMAGIC, ptr->initial_secondary.fire_magic ) );
+            if (ptr->initial_secondary.first_aid)
+                AddSkill( Secondary( Secondary::FIRSTAID, ptr->initial_secondary.first_aid ) );
+            if (ptr->initial_secondary.intelligence)
+                AddSkill( Secondary( Secondary::INTELLIGENCE, ptr->initial_secondary.intelligence ) );
+            if (ptr->initial_secondary.learning)
+                AddSkill( Secondary( Secondary::LEARNING, ptr->initial_secondary.learning ) );
+            if (ptr->initial_secondary.resistance)
+                AddSkill( Secondary( Secondary::RESISTANCE, ptr->initial_secondary.resistance ) );
+            if (ptr->initial_secondary.scholar)
+                AddSkill( Secondary( Secondary::SCHOLAR, ptr->initial_secondary.scholar ) );
+            if (ptr->initial_secondary.sorcery)
+                AddSkill( Secondary( Secondary::SORCERY, ptr->initial_secondary.sorcery ) );
+            if (ptr->initial_secondary.tactics)
+                AddSkill( Secondary( Secondary::TACTICS, ptr->initial_secondary.tactics ) );
+            if (ptr->initial_secondary.water_magic)
+                AddSkill( Secondary( Secondary::WATERMAGIC, ptr->initial_secondary.water_magic ) );
         }
     }
 }
@@ -696,6 +917,34 @@ int Skill::SecondaryGetWeightSkillFromRace( int race, int skill )
             return ptr->mature_secondary.necromancy;
         else if ( skill == Secondary::ESTATES )
             return ptr->mature_secondary.estates;
+        else if ( skill == Secondary::OFFENSE )
+            return ptr->mature_secondary.offense;
+        else if ( skill == Secondary::AIRMAGIC )
+            return ptr->mature_secondary.air_magic;
+        else if ( skill == Secondary::ARMORER )
+            return ptr->mature_secondary.armorer;
+        else if ( skill == Secondary::ARTILLERY )
+            return ptr->mature_secondary.artillery;
+        else if ( skill == Secondary::EARTHMAGIC )
+            return ptr->mature_secondary.earth_magic;
+        else if ( skill == Secondary::FIREMAGIC )
+            return ptr->mature_secondary.fire_magic;
+        else if ( skill == Secondary::FIRSTAID )
+            return ptr->mature_secondary.first_aid;
+        else if ( skill == Secondary::INTELLIGENCE )
+            return ptr->mature_secondary.intelligence;
+        else if ( skill == Secondary::LEARNING )
+            return ptr->mature_secondary.learning;
+        else if ( skill == Secondary::RESISTANCE )
+            return ptr->mature_secondary.resistance;
+        else if ( skill == Secondary::SCHOLAR )
+            return ptr->mature_secondary.scholar;
+        else if ( skill == Secondary::SORCERY )
+            return ptr->mature_secondary.sorcery;
+        else if ( skill == Secondary::TACTICS )
+            return ptr->mature_secondary.tactics;
+        else if ( skill == Secondary::WATERMAGIC )
+            return ptr->mature_secondary.water_magic;
     }
 
     return 0;

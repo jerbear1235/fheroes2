@@ -609,9 +609,11 @@ void Battle::Arena::Turns()
 
         if ( _army1->GetCommander() && !( result_game.army1 & ( RESULT_RETREAT | RESULT_SURRENDER ) ) ) {
             result_game.exp2 += 500;
+            result_game.exp2 += ( result_game.exp2 * ( _army2->GetCommander() ? _army2->GetCommander()->GetSecondaryValues(Skill::Secondary::LEARNING) / 100  : 0 ) );
         }
         if ( ( _isTown || _army2->GetCommander() ) && !( result_game.army2 & ( RESULT_RETREAT | RESULT_SURRENDER ) ) ) {
             result_game.exp1 += 500;
+            result_game.exp1 += ( result_game.exp1 * ( _army1->GetCommander() ? _army1->GetCommander()->GetSecondaryValues(Skill::Secondary::LEARNING) / 100 : 0 ) );
         }
 
         const Force * army_loss = ( result_game.army1 & RESULT_LOSS ? _army1.get() : ( result_game.army2 & RESULT_LOSS ? _army2.get() : nullptr ) );

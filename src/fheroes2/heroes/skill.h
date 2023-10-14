@@ -78,7 +78,21 @@ namespace Skill
             BALLISTICS = 11,
             EAGLEEYE = 12,
             NECROMANCY = 13,
-            ESTATES = 14
+            ESTATES = 14,
+            OFFENSE = 15,
+            AIRMAGIC = 16,
+            ARMORER = 17,
+            ARTILLERY = 18,
+            EARTHMAGIC = 19,
+            FIREMAGIC = 20,
+            FIRSTAID = 21,
+            INTELLIGENCE = 22,
+            LEARNING = 23,
+            RESISTANCE = 24,
+            SCHOLAR = 25,
+            SORCERY = 26,
+            TACTICS = 27,
+            WATERMAGIC = 28
         };
 
         Secondary();

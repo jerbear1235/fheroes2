@@ -543,6 +543,11 @@ uint32_t Battle::Unit::CalculateDamageUnit( const Unit & enemy, double dmg ) con
         else if ( !isAbilityPresent( fheroes2::MonsterAbilityType::NO_MELEE_PENALTY ) ) {
             dmg /= 2;
         }
+    } else if ( isHandFighting() ) {
+        // Hero's Offense Skill may increase damage
+        if ( GetCommander() ) {
+            dmg += ( dmg * GetCommander()->GetSecondaryValues( Skill::Secondary::OFFENSE ) / 100 );
+        }
     }
 
     // The retaliatory damage of a blinded unit is halved
@@ -592,6 +597,10 @@ uint32_t Battle::Unit::CalculateDamageUnit( const Unit & enemy, double dmg ) con
 
     // Attack bonus is 20% to 300%
     dmg *= 1 + ( 0 < r ? 0.1 * std::min( r, 20 ) : 0.05 * std::max( r, -16 ) );
+
+    // Armorer reduction
+    if (enemy.GetCommander())
+        dmg -= ( dmg * enemy.GetCommander()->GetSecondaryValues(Skill::Secondary::ARMORER) / 100 );
 
     return static_cast<uint32_t>( dmg ) < 1 ? 1 : static_cast<uint32_t>( dmg );
 }
@@ -1604,7 +1613,7 @@ uint32_t Battle::Unit::GetMagicResist( const Spell & spell, const uint32_t attac
         break;
     }
 
-    return fheroes2::getSpellResistance( id, spell.GetID() );
+    return fheroes2::getSpellResistance( id, spell.GetID() ) + ( GetCommander() ? GetCommander()->GetSecondaryValues(Skill::Secondary::RESISTANCE) : 0 );
 }
 
 int Battle::Unit::GetSpellMagic() const

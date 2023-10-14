@@ -734,7 +734,8 @@ void Heroes::IncreasePrimarySkill( int skill )
 
 uint32_t Heroes::GetMaxSpellPoints() const
 {
-    return 10 * GetKnowledge();
+    uint32_t baseSpellPointsPool = 10 * GetKnowledge();
+    return baseSpellPointsPool + ( baseSpellPointsPool * GetSecondaryValues(Skill::Secondary::INTELLIGENCE) / 100);
 }
 
 uint32_t Heroes::GetMaxMovePoints() const
