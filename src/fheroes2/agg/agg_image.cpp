@@ -2412,6 +2412,50 @@ namespace fheroes2
             case ICN::GRAY_SMALL_FONT:
                 CopyICNWithPalette( id, ICN::SMALFONT, PAL::PaletteType::GRAY_FONT );
                 return true;
+            case ICN::SECSKILL:
+                LoadOriginalICN( id );
+                // Load the asset for the offense skill
+                _icnVsSprite[id].resize(30);
+                for (auto i = 15; i < _icnVsSprite[id].size(); i++)
+                    _icnVsSprite[id][i] = _icnVsSprite[id][15]; // set final one to transparent frame
+                // TODO: Get the correct pngs for each one. Let us load all in at once.
+                h2d::readImage( "basic_offense.image", _icnVsSprite[id][15] );
+                h2d::readImage( "basic_air_magic.image", _icnVsSprite[id][16] );
+                h2d::readImage( "basic_armorer.image", _icnVsSprite[id][17] );
+                h2d::readImage( "basic_artillery.image", _icnVsSprite[id][18] );
+                h2d::readImage( "basic_earth_magic.image", _icnVsSprite[id][19] );
+                h2d::readImage( "basic_fire_magic.image", _icnVsSprite[id][20] );
+                h2d::readImage( "basic_first_aid.image", _icnVsSprite[id][21] );
+                h2d::readImage( "basic_intelligence.image", _icnVsSprite[id][22] );
+                h2d::readImage( "basic_learning.image", _icnVsSprite[id][23] );
+                h2d::readImage( "basic_resistance.image", _icnVsSprite[id][24] );
+                h2d::readImage( "basic_scholar.image", _icnVsSprite[id][26] );
+                h2d::readImage( "basic_sorcery.image", _icnVsSprite[id][26] );
+                h2d::readImage( "basic_tactics.image", _icnVsSprite[id][27] );
+                h2d::readImage( "basic_water_magic.image", _icnVsSprite[id][28] );
+
+                return true;
+            case ICN::MINISS:
+                LoadOriginalICN( id );
+                _icnVsSprite[id].resize(30);
+                for (int i = 14; i < _icnVsSprite[id].size(); i++) {
+                    _icnVsSprite[id][i] = _icnVsSprite[id][14]; // set final one to transparent frame
+                }
+                h2d::readImage( "basic_offense_icon.image", _icnVsSprite[id][14] );
+                h2d::readImage( "basic_air_magic_icon.image", _icnVsSprite[id][15] );
+                h2d::readImage( "basic_armorer_icon.image", _icnVsSprite[id][16] );
+                h2d::readImage( "basic_artillery_icon.image", _icnVsSprite[id][17] );
+                h2d::readImage( "basic_earth_magic_icon.image", _icnVsSprite[id][18] );
+                h2d::readImage( "basic_fire_magic_icon.image", _icnVsSprite[id][19] );
+                h2d::readImage( "basic_first_aid_icon.image", _icnVsSprite[id][20] );
+                h2d::readImage( "basic_intelligence_icon.image", _icnVsSprite[id][21] );
+                h2d::readImage( "basic_learning_icon.image", _icnVsSprite[id][22] );
+                h2d::readImage( "basic_resistance_icon.image", _icnVsSprite[id][23] );
+                h2d::readImage( "basic_scholar_icon.image", _icnVsSprite[id][24] );
+                h2d::readImage( "basic_sorcery_icon.image", _icnVsSprite[id][25] );
+                h2d::readImage( "basic_tactics_icon.image", _icnVsSprite[id][26] );
+                h2d::readImage( "basic_water_magic_icon.image", _icnVsSprite[id][27] );
+                return true;
             case ICN::SPELLS:
                 LoadOriginalICN( id );
                 _icnVsSprite[id].resize( 67 );
@@ -4341,7 +4385,6 @@ namespace fheroes2
             if ( !IsValidICNId( icnId ) ) {
                 return errorImage;
             }
-
             if ( index >= GetMaximumICNIndex( icnId ) ) {
                 return errorImage;
             }
