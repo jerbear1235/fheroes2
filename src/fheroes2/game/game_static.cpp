@@ -40,7 +40,7 @@ namespace Skill
                            10,
                            { 35, 45, 10, 10 },
                            { 25, 25, 25, 25 },
-                           { 2, 4, 3, 1, 3, 5, 3, 1, 1, 2, 0, 3, 2, 2 } },
+                           { 2, 4, 3, 0, 3, 5, 3, 1, 1, 2, 0, 3, 0, 2, 6, 2, 6, 0, 3, 1, 0, 2, 4, 5, 0, 3, 0, 2 } },
                          { "barbarian",
                            { 1, 1, 1, 1 },
                            { 3, 1, 1, 1 },
@@ -50,7 +50,7 @@ namespace Skill
                            10,
                            { 55, 35, 5, 5 },
                            { 30, 30, 20, 20 },
-                           { 3, 3, 2, 1, 2, 3, 3, 2, 1, 3, 0, 4, 4, 1 } },
+                           { 3, 3, 2, 0, 2, 3, 3, 2, 1, 3, 0, 4, 0, 1, 6, 2, 6, 0, 3, 1, 0, 2, 4, 5, 0, 3, 0, 2 } },
                          { "sorceress",
                            { 0, 0, 2, 2 },
                            { 0, 0, 2, 3 },
@@ -60,7 +60,7 @@ namespace Skill
                            10,
                            { 10, 10, 30, 50 },
                            { 20, 20, 30, 30 },
-                           { 3, 3, 2, 2, 2, 1, 2, 3, 3, 4, 0, 2, 1, 4 } },
+                           { 3, 3, 2, 0, 2, 1, 2, 3, 3, 4, 0, 2, 0, 4, 2, 2, 2, 0, 4, 3, 0, 6, 4, 1, 0, 6, 0, 3 } },
                          { "warlock",
                            { 0, 0, 2, 2 },
                            { 0, 0, 3, 2 },
@@ -70,7 +70,7 @@ namespace Skill
                            10,
                            { 10, 10, 50, 30 },
                            { 20, 20, 30, 30 },
-                           { 1, 3, 2, 3, 2, 1, 2, 1, 3, 2, 1, 2, 4, 5 } },
+                           { 1, 3, 2, 0, 2, 1, 2, 1, 3, 2, 1, 2, 0, 5, 2, 2, 2, 0, 4, 3, 0, 6, 4, 1, 0, 6, 0, 3 } },
                          { "wizard",
                            { 0, 0, 2, 2 },
                            { 0, 1, 2, 2 },
@@ -80,7 +80,7 @@ namespace Skill
                            10,
                            { 10, 10, 40, 40 },
                            { 20, 20, 30, 30 },
-                           { 1, 3, 2, 3, 2, 2, 2, 2, 4, 2, 0, 2, 2, 5 } },
+                           { 1, 3, 2, 0, 2, 2, 2, 2, 4, 2, 0, 2, 0, 5, 2, 2, 2, 0, 4, 3, 0, 6, 4, 1, 0, 6, 0, 3 } },
                          { "necromancer",
                            { 0, 0, 2, 2 },
                            { 1, 0, 2, 2 },
@@ -90,7 +90,7 @@ namespace Skill
                            10,
                            { 15, 15, 35, 35 },
                            { 25, 25, 25, 25 },
-                           { 1, 3, 2, 3, 2, 0, 2, 1, 3, 2, 5, 3, 1, 4 } },
+                           { 1, 3, 2, 0, 2, 0, 2, 1, 3, 2, 5, 3, 0, 4, 2, 2, 2, 0, 4, 3, 0, 6, 4, 1, 0, 6, 0, 3 } },
                          { nullptr,
                            { 0, 0, 0, 0 },
                            { 0, 0, 0, 0 },
@@ -110,10 +110,14 @@ namespace Skill
     };
 
     secondary_t _from_witchs_hut = {
-        /* archery */ 1,   /* ballistics */ 1, /* diplomacy */ 1, /* eagleeye */ 1,
-        /* estates */ 1,   /* leadership */ 0, /* logistics */ 1, /* luck */ 1,
-        /* mysticism */ 1, /* navigation */ 1, /* necromancy*/ 0, /* pathfinding */ 1,
-        /* scouting */ 1,  /* wisdom */ 1 };
+        /* archery   */ 1, /* ballistics   */ 1, /* diplomacy   */ 1, /* eagleeye    */ 0,
+        /* estates   */ 1, /* leadership   */ 0, /* logistics   */ 1, /* luck        */ 1,
+        /* mysticism */ 1, /* navigation   */ 1, /* necromancy  */ 0, /* pathfinding */ 1,
+        /* scouting  */ 0, /* wisdom       */ 1, /* offense     */ 1, /* air_magic   */ 1,
+        /* armorer   */ 1, /* artillery    */ 0, /* earth_magic */ 1, /* fire_magic  */ 1,
+        /* first_aid */ 0, /* intelligence */ 1, /* learning    */ 1, /* resistance  */ 1,
+        /* scholar   */ 0, /* sorcery      */ 1, /* tactics     */ 0, /* water_magic */ 1
+         };
 }
 
 uint32_t GameStatic::GetLostOnWhirlpoolPercent()

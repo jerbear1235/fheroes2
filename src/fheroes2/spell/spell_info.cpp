@@ -102,6 +102,8 @@ namespace fheroes2
         for ( const int32_t value : extraDamagePercentage ) {
             damage = damage * ( 100 + value ) / 100;
         }
+        // Increase damage based on modifier for the school of magic in the hero's secondary skillset.
+        damage += hero->GetSpellBookModifier(spell);
 
         return damage;
     }
@@ -109,13 +111,14 @@ namespace fheroes2
     uint32_t getSummonMonsterCount( const Spell & spell, const uint32_t spellPower, const HeroBase * hero )
     {
         assert( spellPower > 0 );
-
+        uint32_t spellEffectiveness = spell.ExtraValue() * spellPower;
         uint32_t monsterCount = spell.ExtraValue() * spellPower;
 
         if ( hero == nullptr ) {
             return monsterCount;
         }
-
+        monsterCount += ( monsterCount * hero->GetSecondaryValues(Skill::Secondary::SORCERY) / 100 );
+        monsterCount += ( monsterCount * hero->GetSpellBookModifier( spell ) / 100 );
         const std::vector<int32_t> summonSpellExtraEffectPercent
             = hero->GetBagArtifacts().getTotalArtifactMultipliedPercent( ArtifactBonusType::SUMMONING_SPELL_EXTRA_EFFECTIVENESS_PERCENT );
 
@@ -131,8 +134,8 @@ namespace fheroes2
         (void)hero;
 
         assert( spellPower > 0 );
-
-        return spell.Restore() * spellPower;
+        uint32_t spellRestorePower = spell.Restore() * spellPower;
+        return hero->GetSpellBookModifier(spell) + spellRestorePower + ( spellRestorePower * hero->GetSecondaryValues(Skill::Secondary::SORCERY) / 100 );
     }
 
     uint32_t getResurrectPoints( const Spell & spell, const uint32_t spellPower, const HeroBase * hero )
@@ -152,7 +155,7 @@ namespace fheroes2
             resurrectionPoints = resurrectionPoints * ( 100 + value ) / 100;
         }
 
-        return resurrectionPoints;
+        return resurrectionPoints + hero->GetSpellBookModifier(spell);
     }
 
     uint32_t getGuardianMonsterCount( const Spell & spell, const uint32_t spellPower, const HeroBase * hero )
@@ -160,8 +163,8 @@ namespace fheroes2
         (void)hero;
 
         assert( spellPower > 0 );
-
-        return spell.ExtraValue() * spellPower;
+        uint32_t adjustedSpellPoints = spell.ExtraValue() * spellPower;
+        return adjustedSpellPoints + ( adjustedSpellPoints * hero->GetSecondaryValues(Skill::Secondary::SORCERY) / 100 ) + hero->GetSpellBookModifier(spell);
     }
 
     uint32_t getHypnotizeMonsterHPPoints( const Spell & spell, const uint32_t spellPower, const HeroBase * hero )
@@ -172,11 +175,13 @@ namespace fheroes2
         uint32_t hpPoints = spell.ExtraValue() * spellPower;
 
         if ( hero != nullptr ) {
+            hpPoints += ( hpPoints * hero->GetSecondaryValues(Skill::Secondary::SORCERY) / 100 );
             const std::vector<int32_t> extraEffectiveness
                 = hero->GetBagArtifacts().getTotalArtifactMultipliedPercent( fheroes2::ArtifactBonusType::HYPNOTIZE_SPELL_EXTRA_EFFECTIVENESS_PERCENT );
             for ( const int32_t value : extraEffectiveness ) {
                 hpPoints = hpPoints * ( 100 + value ) / 100;
             }
+            hpPoints += hero->GetSpellBookModifier(spell);
         }
 
         return hpPoints;

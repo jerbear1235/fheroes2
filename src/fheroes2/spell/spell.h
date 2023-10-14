@@ -146,6 +146,9 @@ public:
 
     const char * GetName() const;
     const char * GetDescription() const;
+    uint8_t GetSchoolOfMagic() const;
+    const uint8_t * GetSpellModifiers() const;
+    const uint8_t * GetSpellDiscounts() const;
 
     // Returns the number of spell points consumed/required by this spell
     uint32_t spellPoints( const HeroBase * hero = nullptr ) const;
@@ -157,7 +160,7 @@ public:
     uint32_t minMovePoints() const;
 
     // Returns the value of the spell using the provided context
-    double getStrategicValue( double armyStrength, uint32_t currentSpellPoints, int spellPower ) const;
+    double getStrategicValue( double armyStrength, uint32_t currentSpellPoints, int spellPower, int schoolSpellModifier ) const;
 
     int Level() const;
     uint32_t Damage() const;

@@ -42,6 +42,7 @@
 #include "speed.h"
 #include "spell.h"
 #include "spell_storage.h"
+#include "spell_info.h"
 
 using namespace Battle;
 
@@ -140,7 +141,7 @@ namespace AI
             return bestOutcome;
 
         const int spellPower = _commander->GetPower();
-        const uint32_t totalDamage = spell.Damage() * spellPower;
+        const uint32_t totalDamage = fheroes2::getSpellDamage(spell, spellPower, _commander);
 
         const auto damageHeuristic = [this, &totalDamage, &spell, &spellPower, &retreating]( const Unit * unit, const double armyStrength, const double armySpeed ) {
             const uint32_t damage = totalDamage * ( 100 - unit->GetMagicResist( spell, spellPower, _commander ) ) / 100;
@@ -606,7 +607,7 @@ namespace AI
         double bestValue = 0;
         for ( const Spell & spell : spells ) {
             if ( spell.isCombat() && spell.isDamage() && commander.GetSpellPoints() >= spell.spellPoints() ) {
-                bestValue = std::max( bestValue, spell.Damage() * spellPower );
+                bestValue = std::max( bestValue, static_cast<double>(fheroes2::getSpellDamage(spell, spellPower, &commander)) );
             }
         }
 

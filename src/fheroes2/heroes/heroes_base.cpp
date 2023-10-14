@@ -111,6 +111,34 @@ void HeroBase::SetSpellPoints( const uint32_t points )
     magic_point = points;
 }
 
+uint8_t HeroBase::GetSpellCostReduction(const Spell & spell) const {
+    switch(spell.GetSchoolOfMagic()) {
+        case Spell::SchoolOfMagic::AIR_MAGIC:
+            return spell.GetSpellDiscounts()[GetSecondaryValues(Skill::Secondary::AIRMAGIC) & 3]; // don't overflow pass 4.
+        case Spell::SchoolOfMagic::EARTH_MAGIC:
+            return spell.GetSpellDiscounts()[GetSecondaryValues(Skill::Secondary::EARTHMAGIC) & 3]; // don't overflow pass 4.
+        case Spell::SchoolOfMagic::FIRE_MAGIC:
+            return spell.GetSpellDiscounts()[GetSecondaryValues(Skill::Secondary::FIREMAGIC) & 3]; // don't overflow pass 4.
+        case Spell::SchoolOfMagic::WATER_MAGIC:
+            return spell.GetSpellDiscounts()[GetSecondaryValues(Skill::Secondary::WATERMAGIC) & 3]; // don't overflow pass 4.
+    }
+    return 0;
+}
+
+uint8_t HeroBase::GetSpellBookModifier(const Spell & spell) const {
+    switch(spell.GetSchoolOfMagic()) {
+        case Spell::SchoolOfMagic::AIR_MAGIC:
+            return spell.GetSpellModifiers()[GetSecondaryValues(Skill::Secondary::AIRMAGIC) & 3]; // don't overflow pass 4.
+        case Spell::SchoolOfMagic::EARTH_MAGIC:
+            return spell.GetSpellModifiers()[GetSecondaryValues(Skill::Secondary::EARTHMAGIC) & 3]; // don't overflow pass 4.
+        case Spell::SchoolOfMagic::FIRE_MAGIC:
+            return spell.GetSpellModifiers()[GetSecondaryValues(Skill::Secondary::FIREMAGIC) & 3]; // don't overflow pass 4.
+        case Spell::SchoolOfMagic::WATER_MAGIC:
+            return spell.GetSpellModifiers()[GetSecondaryValues(Skill::Secondary::WATERMAGIC) & 3]; // don't overflow pass 4.
+    }
+    return 0;
+}
+
 bool HeroBase::isPotentSpellcaster() const
 {
     // With knowledge 5 or less there isn't enough spell points to make a difference
@@ -347,7 +375,7 @@ double HeroBase::GetMagicStrategicValue( const double armyStrength ) const
     double bestValue = 0;
     for ( const Spell & spell : spells ) {
         if ( spell.isCombat() ) {
-            bestValue = std::max( bestValue, spell.getStrategicValue( armyStrength, currentSpellPoints, spellPower ) );
+            bestValue = std::max( bestValue, spell.getStrategicValue( armyStrength, currentSpellPoints, spellPower, GetSpellBookModifier( spell ) ) );
         }
     }
 

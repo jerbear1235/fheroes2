@@ -1155,7 +1155,7 @@ namespace AI
         case MP2::OBJ_SHRINE_SECOND_CIRCLE:
         case MP2::OBJ_SHRINE_THIRD_CIRCLE: {
             const Spell & spell = getSpellFromTile( tile );
-            return spell.getStrategicValue( hero.GetArmy().GetStrength(), hero.GetMaxSpellPoints(), hero.GetPower() );
+            return spell.getStrategicValue( hero.GetArmy().GetStrength(), hero.GetMaxSpellPoints(), hero.GetPower(), hero.GetSpellBookModifier(spell) );
         }
         case MP2::OBJ_ARENA:
         case MP2::OBJ_FORT:
@@ -1596,7 +1596,7 @@ namespace AI
         case MP2::OBJ_SHRINE_SECOND_CIRCLE:
         case MP2::OBJ_SHRINE_THIRD_CIRCLE: {
             const Spell & spell = getSpellFromTile( tile );
-            return spell.getStrategicValue( hero.GetArmy().GetStrength(), hero.GetMaxSpellPoints(), hero.GetPower() ) * 1.1;
+            return spell.getStrategicValue( hero.GetArmy().GetStrength(), hero.GetMaxSpellPoints(), hero.GetPower(), hero.GetSpellBookModifier(spell) ) * 1.1;
         }
         case MP2::OBJ_ARENA:
         case MP2::OBJ_FORT:

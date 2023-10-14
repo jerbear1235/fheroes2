@@ -121,6 +121,8 @@ public:
     void SpellCasted( const Spell & spell );
     void SetSpellPoints( const uint32_t points );
     bool isPotentSpellcaster() const;
+    uint8_t GetSpellBookModifier(const Spell & spell) const;
+    uint8_t GetSpellCostReduction(const Spell & spell) const;
 
     // Returns all spells present in Magic Book and in Scrolls.
     SpellStorage getAllSpells() const;
